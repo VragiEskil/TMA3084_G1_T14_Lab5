@@ -7,7 +7,7 @@ import 'state/app_state.dart';
     !!! NOTICE !!!
     Comment some codes that are underlined in 
     yellow or red when carrying out test run. 
-    Some of those features may not be unavailable 
+    Some of those features may not be available 
     yet.
 */
 import 'screen/homescreen.dart';
@@ -47,7 +47,7 @@ class MainShell extends StatelessWidget {
 
   // List of main app screens mapped to the navigation index
   static const List<Widget> _pages = [
-    Homescreen(),
+    HomePage(),
     StudentInfo(),
     StudentRecords(),
     CategoryProgram(),
