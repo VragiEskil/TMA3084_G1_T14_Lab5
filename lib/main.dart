@@ -13,7 +13,7 @@ import 'state/app_state.dart';
 */
 import 'screen/homescreen.dart';
 import 'screen/student_info.dart';
-import 'screen/student_records.dart';
+import 'screen/student_records_page.dart';
 import 'screen/category_program.dart';
 import 'screen/about_page.dart';
 
