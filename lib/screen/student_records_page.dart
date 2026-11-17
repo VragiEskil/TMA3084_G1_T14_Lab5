@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../models/student.dart';
 
-class StudentRecordsPage extends StatefulWidget {
-  const StudentRecordsPage({super.key});
+class StudentRecords extends StatefulWidget {
+  const StudentRecords({super.key});
 
   @override
-  State<StudentRecordsPage> createState() => _StudentRecordsPageState();
+  State<StudentRecords> createState() => _StudentRecordsState();
 }
 
-class _StudentRecordsPageState extends State<StudentRecordsPage> {
+class _StudentRecordsState extends State<StudentRecords> {
   // 10 sample student records using your group's Student model
   final List<Student> _initialStudents = [
     Student(
