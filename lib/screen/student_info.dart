@@ -15,7 +15,6 @@ class StudentInfo extends StatelessWidget {
     final students = context.watch<AppState>().students;
     final colors = Theme.of(context).colorScheme;
 
-    
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +41,7 @@ class StudentInfo extends StatelessWidget {
                 : ListView.separated(
                     padding: const EdgeInsets.fromLTRB(12, 0, 12, 16),
                     itemCount: students.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    separatorBuilder: (_, _) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       final student = students[index];
 
@@ -67,9 +66,8 @@ class StudentInfo extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push<void>(
                               MaterialPageRoute<void>(
-                                builder: (_) => StudentDetails(
-                                  student: student,
-                                ),
+                                builder: (_) =>
+                                    StudentDetails(student: student),
                               ),
                             );
                           },

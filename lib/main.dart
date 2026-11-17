@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'state/app_state.dart';
 
 // Import all screens
@@ -12,7 +13,7 @@ import 'state/app_state.dart';
 */
 import 'screen/homescreen.dart';
 import 'screen/student_info.dart';
-import 'screen/student_records.dart';
+// import 'screen/student_records.dart';
 import 'screen/category_program.dart';
 import 'screen/about_page.dart';
 
@@ -49,7 +50,7 @@ class MainShell extends StatelessWidget {
   static const List<Widget> _pages = [
     HomePage(),
     StudentInfo(),
-    StudentRecords(),
+    // StudentRecords(),
     CategoryProgram(),
     AboutPage(),
   ];
