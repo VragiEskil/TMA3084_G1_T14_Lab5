@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+
 import '../models/student.dart';
 
 class AppState extends ChangeNotifier {
@@ -94,8 +95,7 @@ class AppState extends ChangeNotifier {
       cgpa: 3.99,
       status: 'Inactive',
     ),
-
-  ] ;
+  ];
 
   // Exporter to read students securely from UI
   List<Student> get students => _students;
@@ -104,5 +104,5 @@ class AppState extends ChangeNotifier {
   void addStudent(Student student) {
     _students.add(student);
     notifyListeners();
-  } 
+  }
 }

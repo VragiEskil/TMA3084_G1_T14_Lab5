@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/student.dart';
 
 class StudentRecordsPage extends StatefulWidget {
@@ -146,16 +147,14 @@ class _StudentRecordsPageState extends State<StudentRecordsPage> {
         children: [
           Text(
             'Academic Records (${_records.length} Students)',
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(context).textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 4),
           Text(
             'Tap Matric No., Full Name, or CGPA headers to sort ascending or descending.',
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
+            style: Theme.of(context).textTheme.bodySmall
+                ?.copyWith(color: colorScheme.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -213,11 +212,8 @@ class _StudentRecordsPageState extends State<StudentRecordsPage> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         numeric: true,
-                        onSort: (columnIndex, ascending) => _onSort<num>(
-                          (s) => s.cgpa,
-                          columnIndex,
-                          ascending,
-                        ),
+                        onSort: (columnIndex, ascending) =>
+                            _onSort<num>((s) => s.cgpa, columnIndex, ascending),
                       ),
                       const DataColumn(
                         label: Text(
@@ -227,8 +223,10 @@ class _StudentRecordsPageState extends State<StudentRecordsPage> {
                       ),
                     ],
                     rows: _records.map((student) {
-                      final statusColor =
-                          _getStatusColor(student.status, colorScheme);
+                      final statusColor = _getStatusColor(
+                        student.status,
+                        colorScheme,
+                      );
                       return DataRow(
                         cells: [
                           DataCell(Text(student.matricNum)),

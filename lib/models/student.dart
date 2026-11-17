@@ -43,5 +43,4 @@ class Student {
       'status': status,
     };
   }
-  
 }

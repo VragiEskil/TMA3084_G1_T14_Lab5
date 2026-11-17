@@ -2,6 +2,7 @@
 // Voted: 102387 | Ahmad Muslihin
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../state/app_state.dart';
 
 // Class definition
@@ -52,7 +53,9 @@ class HomePage extends StatelessWidget {
                     'Welcome back! Monitor student enrollments, track academic programs, and manage records from one dashboard.',
                     style: TextStyle(
                       fontSize: 14,
-                      color: colorScheme.onPrimaryContainer.withValues(alpha: 0.85),
+                      color: colorScheme.onPrimaryContainer.withValues(
+                        alpha: 0.85,
+                      ),
                     ),
                   ),
                 ],
@@ -114,28 +117,34 @@ class HomePage extends StatelessWidget {
                 ),
               )
             else
-              ...appState.students.take(3).map(
-                (student) => Card(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: colorScheme.secondaryContainer,
-                      child: Text(
-                        student.name.isNotEmpty ? student.name[0].toUpperCase() : '?',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: colorScheme.onSecondaryContainer,
+              ...appState.students
+                  .take(3)
+                  .map(
+                    (student) => Card(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: colorScheme.secondaryContainer,
+                          child: Text(
+                            student.name.isNotEmpty
+                                ? student.name[0].toUpperCase()
+                                : '?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSecondaryContainer,
+                            ),
+                          ),
+                        ),
+                        title: Text(
+                          student.name,
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text(
+                          '${student.matricNum} • ${student.programme}',
                         ),
                       ),
                     ),
-                    title: Text(
-                      student.name,
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    subtitle: Text('${student.matricNum} • ${student.programme}'),
                   ),
-                ),
-              ),
           ],
         ),
       ),
@@ -169,10 +178,7 @@ class _StatCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               value,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 4),
             Text(
