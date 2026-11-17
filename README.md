@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# student_hub
+# student_hub for lab 5
 
 A new Flutter project.
 
