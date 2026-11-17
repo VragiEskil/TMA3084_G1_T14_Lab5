@@ -47,7 +47,7 @@ class MainShell extends StatelessWidget {
 
   // List of main app screens mapped to the navigation index
   static const List<Widget> _pages = [
-    Homescreen(),
+    HomePage(),
     StudentInfo(),
     StudentRecords(),
     CategoryProgram(),
