@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
-// Update 'studenthub' and folder paths below to match your project
-import 'package:studenthub/state/app_state.dart';
-import 'package:studenthub/screen/student_records_page.dart';
+import '../lib/state/app_state.dart';
+import '../lib/screen/student_records_page.dart';
 
 void main() {
   testWidgets(
