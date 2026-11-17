@@ -14,9 +14,7 @@ class StudentDetails extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Student Details'),
-      ),
+      appBar: AppBar(title: const Text('Student Details')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
@@ -40,9 +38,7 @@ class StudentDetails extends StatelessWidget {
                     Text(
                       student.name,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall
+                      style: Theme.of(context).textTheme.headlineSmall
                           ?.copyWith(color: colors.onPrimaryContainer),
                     ),
                   ],
@@ -74,9 +70,7 @@ class StudentDetails extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.grade_outlined),
                     title: const Text('CGPA'),
-                    subtitle: SelectableText(
-                      student.cgpa.toStringAsFixed(2),
-                    ),
+                    subtitle: SelectableText(student.cgpa.toStringAsFixed(2)),
                   ),
                   const Divider(height: 1),
                   ListTile(

@@ -15,7 +15,6 @@ class StudentInfo extends StatelessWidget {
     final students = context.watch<AppState>().students;
     final colors = Theme.of(context).colorScheme;
 
-    
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +66,8 @@ class StudentInfo extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push<void>(
                               MaterialPageRoute<void>(
-                                builder: (_) => StudentDetails(
-                                  student: student,
-                                ),
+                                builder: (_) =>
+                                    StudentDetails(student: student),
                               ),
                             );
                           },
