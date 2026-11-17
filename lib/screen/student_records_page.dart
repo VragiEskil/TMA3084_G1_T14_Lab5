@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../models/student.dart';
+import '../providers/app_state.dart';
 
 class StudentRecords extends StatefulWidget {
   const StudentRecords({super.key});
@@ -10,151 +11,85 @@ class StudentRecords extends StatefulWidget {
 }
 
 class _StudentRecordsState extends State<StudentRecords> {
-  // 10 sample student records using your group's Student model
-  final List<Student> _initialStudents = [
-    Student(
-      name: 'Aiman Hakim',
-      matricNum: '83012',
-      programme: 'Software Engineering',
-      email: '83012@siswa.unimas.my',
-      cgpa: 3.65,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Nurul Izzah',
-      matricNum: '83045',
-      programme: 'Network Computing',
-      email: '83045@siswa.unimas.my',
-      cgpa: 3.82,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Darren Tan',
-      matricNum: '83108',
-      programme: 'Multimedia Computing',
-      email: '83108@siswa.unimas.my',
-      cgpa: 3.12,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Siti Aisyah',
-      matricNum: '83154',
-      programme: 'Software Engineering',
-      email: '83154@siswa.unimas.my',
-      cgpa: 3.91,
-      status: 'Dean List',
-    ),
-    Student(
-      name: 'Brandon Wong',
-      matricNum: '83201',
-      programme: 'Information Systems',
-      email: '83201@siswa.unimas.my',
-      cgpa: 2.78,
-      status: 'Probation',
-    ),
-    Student(
-      name: 'Farah Nabilah',
-      matricNum: '83267',
-      programme: 'Computational Science',
-      email: '83267@siswa.unimas.my',
-      cgpa: 3.45,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Kevin Lim',
-      matricNum: '83319',
-      programme: 'Software Engineering',
-      email: '83319@siswa.unimas.my',
-      cgpa: 3.58,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Dayangku Sofea',
-      matricNum: '83380',
-      programme: 'Network Computing',
-      email: '83380@siswa.unimas.my',
-      cgpa: 3.74,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Hafizuddin Rosli',
-      matricNum: '83412',
-      programme: 'Multimedia Computing',
-      email: '83412@siswa.unimas.my',
-      cgpa: 2.95,
-      status: 'Active',
-    ),
-    Student(
-      name: 'Michelle Chua',
-      matricNum: '83499',
-      programme: 'Information Systems',
-      email: '83499@siswa.unimas.my',
-      cgpa: 3.88,
-      status: 'Dean List',
-    ),
-  ];
-
-  late List<Student> _records;
   int? _sortColumnIndex;
   bool _isAscending = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _records = List<Student>.from(_initialStudents);
-  }
-
-  void _onSort<T extends Comparable<Object>>(
-    T Function(Student student) getField,
-    int columnIndex,
-    bool ascending,
-  ) {
-    setState(() {
-      _sortColumnIndex = columnIndex;
-      _isAscending = ascending;
-
-      _records.sort((a, b) {
-        final aValue = getField(a);
-        final bValue = getField(b);
-        return ascending
-            ? Comparable.compare(aValue, bValue)
-            : Comparable.compare(bValue, aValue);
-      });
-    });
-  }
-
   Color _getStatusColor(String status, ColorScheme colorScheme) {
-    switch (status) {
-      case 'Dean List':
+    switch (status.toLowerCase()) {
+      case 'active':
         return Colors.green.shade700;
-      case 'Probation':
+      case 'inactive':
         return colorScheme.error;
       default:
         return colorScheme.primary;
     }
   }
 
+  List<Student> _getSortedStudents(List<Student> source) {
+    final sorted = List<Student>.from(source);
+
+    if (_sortColumnIndex == null) return sorted;
+
+    sorted.sort((a, b) {
+      int comparison;
+      switch (_sortColumnIndex) {
+        case 0: // Matric No. (numeric-aware comparison)
+          final aNum = int.tryParse(a.matricNum);
+          final bNum = int.tryParse(b.matricNum);
+          if (aNum != null && bNum != null) {
+            comparison = Comparable.compare(aNum, bNum);
+          } else {
+            comparison = Comparable.compare(a.matricNum, b.matricNum);
+          }
+          break;
+        case 1: // Full Name
+          comparison = Comparable.compare(
+            a.name.toLowerCase(),
+            b.name.toLowerCase(),
+          );
+          break;
+        case 4: // CGPA
+          comparison = Comparable.compare(a.cgpa, b.cgpa);
+          break;
+        default:
+          comparison = 0;
+      }
+      return _isAscending ? comparison : -comparison;
+    });
+
+    return sorted;
+  }
+
+  void _onSort(int columnIndex, bool ascending) {
+    setState(() {
+      _sortColumnIndex = columnIndex;
+      _isAscending = ascending;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final sharedStudents = context.watch<AppState>().students;
+    final records = _getSortedStudents(sharedStudents);
 
-    // NOTE: If your group's MainScreen does NOT provide a Scaffold/AppBar,
-    // wrap this Padding in `Scaffold(appBar: AppBar(title: const Text('Student Records')), body: ...)`
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Academic Records (${_records.length} Students)',
-            style: Theme.of(context).textTheme.titleMedium
-                ?.copyWith(fontWeight: FontWeight.bold),
+            'Academic Records (${records.length} Students)',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           const SizedBox(height: 4),
           Text(
             'Tap Matric No., Full Name, or CGPA headers to sort ascending or descending.',
-            style: Theme.of(context).textTheme.bodySmall
-                ?.copyWith(color: colorScheme.onSurfaceVariant),
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -177,22 +112,14 @@ class _StudentRecordsState extends State<StudentRecords> {
                           'Matric No.',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        onSort: (columnIndex, ascending) => _onSort<String>(
-                          (s) => s.matricNum,
-                          columnIndex,
-                          ascending,
-                        ),
+                        onSort: _onSort,
                       ),
                       DataColumn(
                         label: const Text(
                           'Full Name',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        onSort: (columnIndex, ascending) => _onSort<String>(
-                          (s) => s.name.toLowerCase(),
-                          columnIndex,
-                          ascending,
-                        ),
+                        onSort: _onSort,
                       ),
                       const DataColumn(
                         label: Text(
@@ -212,8 +139,7 @@ class _StudentRecordsState extends State<StudentRecords> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         numeric: true,
-                        onSort: (columnIndex, ascending) =>
-                            _onSort<num>((s) => s.cgpa, columnIndex, ascending),
+                        onSort: _onSort,
                       ),
                       const DataColumn(
                         label: Text(
@@ -222,11 +148,9 @@ class _StudentRecordsState extends State<StudentRecords> {
                         ),
                       ),
                     ],
-                    rows: _records.map((student) {
-                      final statusColor = _getStatusColor(
-                        student.status,
-                        colorScheme,
-                      );
+                    rows: records.map((student) {
+                      final statusColor =
+                          _getStatusColor(student.status, colorScheme);
                       return DataRow(
                         cells: [
                           DataCell(Text(student.matricNum)),
