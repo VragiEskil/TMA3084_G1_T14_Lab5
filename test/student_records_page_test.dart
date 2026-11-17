@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 // Update 'studenthub' below if the `name:` in your pubspec.yaml is different
-import 'package:studenthub/pages/student_records_page.dart';
+import 'package:studenthub/screen/student_records_page.dart';
 
 void main() {
   testWidgets(
-    'StudentRecordsPage displays 10 records and sorts ascending/descending',
+    'StudentRecords displays 10 records and sorts ascending/descending',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        const MaterialApp(home: Scaffold(body: StudentRecordsPage())),
+        const MaterialApp(home: Scaffold(body: StudentRecords())),
       );
 
       // Verify DataTable and headers render
